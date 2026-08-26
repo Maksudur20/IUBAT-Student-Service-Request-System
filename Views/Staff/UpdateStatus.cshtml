@@ -1,0 +1,91 @@
+@model StudentServiceRequestSystem.ViewModels.UpdateRequestStatusViewModel
+@{
+    ViewData["Title"] = $"Update Status - Request #{Model.Id}";
+}
+
+<div class="row justify-content-center py-3">
+    <div class="col-lg-8">
+        <nav aria-label="breadcrumb" class="mb-3">
+            <ol class="breadcrumb small">
+                <li class="breadcrumb-item"><a asp-controller="Staff" asp-action="Dashboard">Dashboard</a></li>
+                <li class="breadcrumb-item"><a asp-controller="Staff" asp-action="Requests">Requests</a></li>
+                <li class="breadcrumb-item"><a asp-controller="Staff" asp-action="Details" asp-route-id="@Model.Id">Request #@Model.Id</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Update Status</li>
+            </ol>
+        </nav>
+
+        <div class="card shadow border-0 rounded-4 bg-white p-4 p-md-5">
+            <div class="d-flex align-items-center mb-4">
+                <div class="icon-circle icon-circle-lg bg-primary-subtle text-primary me-3">
+                    <i class="bi bi-pencil-square"></i>
+                </div>
+                <div>
+                    <h3 class="fw-bold text-dark mb-1">Update Request Status</h3>
+                    <p class="text-muted small mb-0">Modify the processing state and write remarks visible to the student.</p>
+                </div>
+            </div>
+
+            <!-- Context summary -->
+            <div class="p-3 bg-light rounded-4 border mb-4">
+                <div class="row g-2">
+                    <div class="col-sm-6">
+                        <span class="text-muted small">Student:</span>
+                        <div class="fw-bold text-dark">@Model.StudentName (@Model.StudentEmail)</div>
+                    </div>
+                    <div class="col-sm-6">
+                        <span class="text-muted small">Service Type:</span>
+                        <div class="fw-bold text-dark">@Model.RequestType.ToFriendlyName()</div>
+                    </div>
+                    <div class="col-12 mt-2">
+                        <span class="text-muted small">Submitted Description:</span>
+                        <div class="small text-secondary bg-white p-2 rounded border mt-1">@Model.Description</div>
+                    </div>
+                </div>
+            </div>
+
+            <form asp-controller="Staff" asp-action="UpdateStatus" asp-route-id="@Model.Id" method="post" novalidate>
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="StudentName" />
+                <input type="hidden" asp-for="StudentEmail" />
+                <input type="hidden" asp-for="RequestType" />
+                <input type="hidden" asp-for="Description" />
+                <input type="hidden" asp-for="RequestDate" />
+
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger rounded-3 small mb-3"></div>
+
+                <div class="mb-4">
+                    <label asp-for="Status" class="form-label fw-semibold small text-secondary"></label>
+                    <select asp-for="Status" class="form-select form-select-lg" asp-items="Html.GetEnumSelectList<StudentServiceRequestSystem.Models.RequestStatus>()">
+                    </select>
+                    <span asp-validation-for="Status" class="text-danger small"></span>
+                    <div class="form-text text-muted small">
+                        Choose between <strong>Pending</strong>, <strong>Processing</strong>, <strong>Completed</strong>, or <strong>Rejected</strong>.
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="StaffRemarks" class="form-label fw-semibold small text-secondary"></label>
+                    <textarea asp-for="StaffRemarks" class="form-control" rows="4" placeholder="e.g. Document ready for collection at registrar counter 3 with student ID."></textarea>
+                    <span asp-validation-for="StaffRemarks" class="text-danger small"></span>
+                    <div class="form-text text-muted small">
+                        Provide clear notes or pickup instructions. The student will be able to see these remarks on their dashboard.
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center pt-2">
+                    <a asp-controller="Staff" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-outline-secondary rounded-pill px-4">
+                        Cancel
+                    </a>
+                    <button type="submit" class="btn btn-primary btn-lg rounded-pill px-4 shadow-sm fw-semibold">
+                        <i class="bi bi-check2-circle me-1"></i> Save Status Update
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

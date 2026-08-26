@@ -1,0 +1,81 @@
+@model StudentServiceRequestSystem.ViewModels.RegisterViewModel
+@{
+    ViewData["Title"] = "Student Registration";
+}
+
+<div class="row justify-content-center py-4">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow border-0 rounded-4 p-4 p-md-5 bg-white">
+            <div class="text-center mb-4">
+                <img src="~/images/iubat-logo.png" alt="IUBAT Logo" class="mb-3" style="height: 64px; width: auto;" />
+                <h3 class="fw-bold text-dark mb-1">Student Registration</h3>
+                <p class="text-muted small">Create your official student service portal account</p>
+            </div>
+
+            <form asp-controller="Account" asp-action="Register" method="post" novalidate>
+                @Html.AntiForgeryToken()
+
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger rounded-3 small mb-3"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Name" class="form-label fw-semibold small text-secondary"></label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light text-muted border-end-0"><i class="bi bi-person"></i></span>
+                        <input asp-for="Name" class="form-control border-start-0" placeholder="e.g. Maksudur Rahman" />
+                    </div>
+                    <span asp-validation-for="Name" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label fw-semibold small text-secondary"></label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light text-muted border-end-0"><i class="bi bi-envelope"></i></span>
+                        <input asp-for="Email" class="form-control border-start-0" placeholder="student@iubat.edu" />
+                    </div>
+                    <span asp-validation-for="Email" class="text-danger small"></span>
+                    <div class="form-text text-muted small">Please use your valid university email address.</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Password" class="form-label fw-semibold small text-secondary"></label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light text-muted border-end-0"><i class="bi bi-key"></i></span>
+                            <input asp-for="Password" class="form-control border-start-0" placeholder="Minimum 6 characters" />
+                        </div>
+                        <span asp-validation-for="Password" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="ConfirmPassword" class="form-label fw-semibold small text-secondary"></label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light text-muted border-end-0"><i class="bi bi-shield-check"></i></span>
+                            <input asp-for="ConfirmPassword" class="form-control border-start-0" placeholder="Re-type password" />
+                        </div>
+                        <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <div class="alert alert-info border-0 rounded-3 p-3 small mb-4">
+                    <i class="bi bi-shield-lock-fill me-1"></i>
+                    <strong>Role Policy:</strong> All new public registrations are automatically assigned the <strong>Student</strong> role. Staff roles are granted solely by system administration.
+                </div>
+
+                <div class="d-grid mb-3">
+                    <button type="submit" class="btn btn-warning btn-lg rounded-pill fw-semibold text-dark shadow-sm">
+                        <i class="bi bi-person-check me-1"></i> Register Student Account
+                    </button>
+                </div>
+            </form>
+
+            <div class="text-center pt-3 border-top">
+                <span class="text-muted small">Already have an account? </span>
+                <a asp-controller="Account" asp-action="Login" class="fw-bold text-decoration-none">Sign in here</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

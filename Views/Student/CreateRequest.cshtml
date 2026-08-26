@@ -1,0 +1,67 @@
+@model StudentServiceRequestSystem.ViewModels.CreateRequestViewModel
+@{
+    ViewData["Title"] = "Submit Service Request";
+}
+
+<div class="row justify-content-center py-3">
+    <div class="col-lg-8">
+        <nav aria-label="breadcrumb" class="mb-3">
+            <ol class="breadcrumb small">
+                <li class="breadcrumb-item"><a asp-controller="Student" asp-action="Dashboard">Dashboard</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Submit Request</li>
+            </ol>
+        </nav>
+
+        <div class="card shadow border-0 rounded-4 bg-white p-4 p-md-5">
+            <div class="d-flex align-items-center mb-4">
+                <div class="icon-circle icon-circle-lg bg-primary-subtle text-primary me-3">
+                    <i class="bi bi-file-earmark-plus"></i>
+                </div>
+                <div>
+                    <h3 class="fw-bold text-dark mb-1">Submit Service Request</h3>
+                    <p class="text-muted small mb-0">Fill in the details below to submit an official request to university administration.</p>
+                </div>
+            </div>
+
+            <form asp-controller="Student" asp-action="CreateRequest" method="post" novalidate>
+                @Html.AntiForgeryToken()
+
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger rounded-3 small mb-3"></div>
+
+                <div class="mb-4">
+                    <label asp-for="RequestType" class="form-label fw-semibold text-secondary small"></label>
+                    <select asp-for="RequestType" class="form-select form-select-lg" asp-items="Html.GetEnumSelectList<StudentServiceRequestSystem.Models.RequestType>()">
+                        <option value="">-- Choose a Service Request Type --</option>
+                    </select>
+                    <span asp-validation-for="RequestType" class="text-danger small"></span>
+                    <div class="form-text text-muted small">Select the category that matches your need (ID Card, Transcript, or Certificate).</div>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Description" class="form-label fw-semibold text-secondary small"></label>
+                    <textarea asp-for="Description" class="form-control" rows="5" placeholder="Provide relevant details, e.g. semester completed, student ID, pickup preferences, reason for replacement, etc."></textarea>
+                    <span asp-validation-for="Description" class="text-danger small"></span>
+                    <div class="form-text text-muted small">Minimum 10 characters, maximum 1000 characters.</div>
+                </div>
+
+                <div class="alert alert-light border rounded-3 p-3 mb-4 small text-secondary">
+                    <div class="fw-bold text-dark mb-1"><i class="bi bi-info-circle text-primary me-1"></i> What happens next?</div>
+                    Your request will be placed in <strong>Pending</strong> status and assigned to university staff for verification. You can track progress anytime from your <strong>My Requests</strong> tab.
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center pt-2">
+                    <a asp-controller="Student" asp-action="Dashboard" class="btn btn-outline-secondary rounded-pill px-4">
+                        Cancel
+                    </a>
+                    <button type="submit" class="btn btn-primary btn-lg rounded-pill px-4 shadow-sm fw-semibold">
+                        <i class="bi bi-send me-1"></i> Submit Request
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

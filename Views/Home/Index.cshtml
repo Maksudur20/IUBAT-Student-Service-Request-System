@@ -1,0 +1,94 @@
+@{
+    ViewData["Title"] = "Welcome";
+}
+
+<div class="row align-items-center py-5">
+    <div class="col-lg-7 mb-4 mb-lg-0">
+        <div class="pe-lg-4">
+            <span class="badge bg-primary-subtle text-primary fw-semibold px-3 py-2 rounded-pill mb-3 d-inline-flex align-items-center">
+                <img src="~/images/iubat-logo.png" alt="IUBAT Logo" class="me-2" style="height: 22px; width: auto;" />
+                IUBAT University Service Portal
+            </span>
+            <h1 class="display-4 fw-bold text-dark mb-3">
+                Fast & Digital Student Service Requests
+            </h1>
+            <p class="lead text-muted mb-4">
+                Say goodbye to physical lines and manual paper forms. Submit your official requests online, track live processing status, and receive real-time updates from university staff.
+            </p>
+
+            <div class="d-flex flex-wrap gap-3 mb-4">
+                <a asp-controller="Account" asp-action="Login" class="btn btn-primary btn-lg rounded-pill px-4 shadow-sm">
+                    <i class="bi bi-box-arrow-in-right me-1"></i> Student & Staff Login
+                </a>
+                <a asp-controller="Account" asp-action="Register" class="btn btn-outline-primary btn-lg rounded-pill px-4">
+                    <i class="bi bi-person-plus me-1"></i> Register as Student
+                </a>
+            </div>
+
+            <div class="row pt-3 g-3 border-top">
+                <div class="col-sm-4">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-check-circle-fill text-success fs-4 me-2"></i>
+                        <span class="small fw-semibold text-secondary">24/7 Online Submission</span>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-shield-check text-primary fs-4 me-2"></i>
+                        <span class="small fw-semibold text-secondary">Role-Protected Security</span>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-lightning-charge-fill text-warning fs-4 me-2"></i>
+                        <span class="small fw-semibold text-secondary">Instant Status Updates</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-5">
+        <div class="card shadow border-0 rounded-4 p-4 bg-white">
+            <h4 class="fw-bold text-dark mb-3">Available Student Services</h4>
+            <p class="text-muted small mb-4">You can request any of the following standard university services directly from your student account:</p>
+
+            <div class="list-group list-group-flush">
+                <div class="list-group-item px-0 py-3 d-flex align-items-center border-bottom">
+                    <div class="icon-circle icon-circle-md bg-primary-subtle text-primary me-3">
+                        <i class="bi bi-person-vcard"></i>
+                    </div>
+                    <div>
+                        <h6 class="fw-bold mb-1">ID Card Replacement</h6>
+                        <p class="text-muted small mb-0">Apply for a new student identity card in case of loss, damage, or renewal.</p>
+                    </div>
+                </div>
+
+                <div class="list-group-item px-0 py-3 d-flex align-items-center border-bottom">
+                    <div class="icon-circle icon-circle-md bg-success-subtle text-success me-3">
+                        <i class="bi bi-file-earmark-text"></i>
+                    </div>
+                    <div>
+                        <h6 class="fw-bold mb-1">Transcript Request</h6>
+                        <p class="text-muted small mb-0">Request official semester or complete academic grade transcripts for jobs and scholarships.</p>
+                    </div>
+                </div>
+
+                <div class="list-group-item px-0 py-3 d-flex align-items-center">
+                    <div class="icon-circle icon-circle-md bg-warning-subtle text-warning me-3">
+                        <i class="bi bi-award"></i>
+                    </div>
+                    <div>
+                        <h6 class="fw-bold mb-1">Certificate Request</h6>
+                        <p class="text-muted small mb-0">Obtain bonafide student certificates, graduation clearances, or medium-of-instruction letters.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4 p-3 bg-light rounded-3 text-center border">
+                <span class="text-muted small">Already have an account? </span>
+                <a asp-controller="Account" asp-action="Login" class="fw-bold text-decoration-none">Sign in here &rarr;</a>
+            </div>
+        </div>
+    </div>
+</div>

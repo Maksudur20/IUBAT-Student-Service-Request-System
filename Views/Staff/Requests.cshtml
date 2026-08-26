@@ -1,0 +1,231 @@
+@model IEnumerable<StudentServiceRequestSystem.ViewModels.StaffRequestItemViewModel>
+@using StudentServiceRequestSystem.Models
+@{
+    ViewData["Title"] = "All Student Service Requests";
+    var statusFilter = ViewData["StatusFilter"] as RequestStatus?;
+    var typeFilter = ViewData["TypeFilter"] as RequestType?;
+    var searchQuery = ViewData["SearchQuery"] as string;
+}
+
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 pb-2 border-bottom">
+    <div>
+        <h2 class="fw-bold text-dark mb-1">Student Service Requests</h2>
+        <p class="text-muted mb-0">Manage, review, and update statuses for all university student service requests</p>
+    </div>
+    <div class="mt-3 mt-md-0">
+        <a asp-controller="Staff" asp-action="Dashboard" class="btn btn-outline-secondary rounded-pill px-3">
+            <i class="bi bi-speedometer2 me-1"></i> Staff Dashboard
+        </a>
+    </div>
+</div>
+
+<!-- Search & Filter Controls -->
+<div class="card shadow-sm border-0 rounded-4 p-3 p-md-4 bg-white mb-4">
+    <form id="filterForm" asp-controller="Staff" asp-action="Requests" method="get" class="row g-3 align-items-center">
+        <!-- Hidden inputs for dropdown filter values -->
+        <input type="hidden" name="statusFilter" id="statusFilterInput" value="@(statusFilter?.ToString() ?? "")" />
+        <input type="hidden" name="typeFilter" id="typeFilterInput" value="@(typeFilter?.ToString() ?? "")" />
+
+        <!-- Search Input with rounded-pill style -->
+        <div class="col-lg-4 col-md-12">
+            <div class="input-group search-pill">
+                <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-search"></i></span>
+                <input type="text" name="search" value="@searchQuery" class="form-control border-start-0" placeholder="Search name, email, ID..." />
+            </div>
+        </div>
+
+        <!-- Status Filter Custom Dropdown -->
+        <div class="col-sm-6 col-lg-3">
+            <div class="dropdown custom-filter-dropdown w-100">
+                <button class="btn dropdown-toggle d-flex align-items-center justify-content-between w-100" 
+                        type="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                    <span class="d-flex align-items-center text-truncate">
+                        <i class="bi bi-funnel text-primary me-2 flex-shrink-0"></i>
+                        @if (statusFilter != null)
+                        {
+                            <span class="badge @statusFilter.Value.ToBadgeClass() rounded-pill me-1">@statusFilter</span>
+                        }
+                        else
+                        {
+                            <span class="text-secondary">All Statuses</span>
+                        }
+                    </span>
+                </button>
+                <ul class="dropdown-menu shadow-lg border-0 w-100">
+                    <li>
+                        <button type="button" class="dropdown-item d-flex align-items-center @(statusFilter == RequestStatus.Pending ? "active fw-semibold" : "")" 
+                                onclick="applyDropdownFilter('statusFilterInput', '@RequestStatus.Pending')">
+                            <i class="bi bi-hourglass-split text-warning me-2"></i> Pending
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" class="dropdown-item d-flex align-items-center @(statusFilter == RequestStatus.Processing ? "active fw-semibold" : "")" 
+                                onclick="applyDropdownFilter('statusFilterInput', '@RequestStatus.Processing')">
+                            <i class="bi bi-gear-wide text-primary me-2"></i> Processing
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" class="dropdown-item d-flex align-items-center @(statusFilter == RequestStatus.Completed ? "active fw-semibold" : "")" 
+                                onclick="applyDropdownFilter('statusFilterInput', '@RequestStatus.Completed')">
+                            <i class="bi bi-check2-circle text-success me-2"></i> Completed
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" class="dropdown-item d-flex align-items-center @(statusFilter == RequestStatus.Rejected ? "active fw-semibold" : "")" 
+                                onclick="applyDropdownFilter('statusFilterInput', '@RequestStatus.Rejected')">
+                            <i class="bi bi-x-circle text-danger me-2"></i> Rejected
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Request Type Filter Custom Dropdown -->
+        <div class="col-sm-6 col-lg-3">
+            <div class="dropdown custom-filter-dropdown w-100">
+                <button class="btn dropdown-toggle d-flex align-items-center justify-content-between w-100" 
+                        type="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                    <span class="d-flex align-items-center text-truncate">
+                        <i class="bi bi-tag text-primary me-2 flex-shrink-0"></i>
+                        @if (typeFilter != null)
+                        {
+                            <span class="badge bg-light text-dark border me-1">@typeFilter.Value.ToFriendlyName()</span>
+                        }
+                        else
+                        {
+                            <span class="text-secondary">All Request Types</span>
+                        }
+                    </span>
+                </button>
+                <ul class="dropdown-menu shadow-lg border-0 w-100">
+                    @foreach (RequestType rt in Enum.GetValues(typeof(RequestType)))
+                    {
+                        <li>
+                            <button type="button" class="dropdown-item d-flex align-items-center @(typeFilter == rt ? "active fw-semibold" : "")" 
+                                    onclick="applyDropdownFilter('typeFilterInput', '@rt')">
+                                <i class="bi bi-file-earmark-text text-secondary me-2"></i> @rt.ToFriendlyName()
+                            </button>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="col-lg-2 col-md-12 d-flex gap-2">
+            <button type="submit" class="btn btn-primary rounded-pill px-3 flex-grow-1 d-flex align-items-center justify-content-center" title="Apply Filter">
+                <i class="bi bi-search me-1"></i><span>Search</span>
+            </button>
+            @if (!string.IsNullOrEmpty(searchQuery) || statusFilter != null || typeFilter != null)
+            {
+                <a asp-controller="Staff" asp-action="Requests" class="btn btn-outline-danger rounded-pill px-3 d-flex align-items-center justify-content-center" title="Reset Filters">
+                    <i class="bi bi-x-lg"></i>
+                </a>
+            }
+        </div>
+    </form>
+</div>
+
+<!-- Requests Table -->
+<div class="card shadow-sm border-0 rounded-4 bg-white overflow-hidden">
+    <div class="card-body p-0">
+        @if (Model.Any())
+        {
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0 text-nowrap w-100">
+                    <thead class="table-light text-secondary small">
+                        <tr>
+                            <th class="ps-3 text-nowrap" style="width: 50px;">ID</th>
+                            <th class="text-nowrap">Student Name</th>
+                            <th class="text-nowrap">Student Email</th>
+                            <th class="text-nowrap">Service Type</th>
+                            <th class="text-nowrap">Submitted</th>
+                            <th class="text-nowrap text-center" style="width: 105px;">Status</th>
+                            <th class="text-nowrap">Staff Remarks</th>
+                            <th class="text-end pe-3 text-nowrap" style="width: 140px;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="ps-3 fw-bold text-secondary text-nowrap">#@item.Id</td>
+                                <td class="text-nowrap">
+                                    <span class="fw-semibold text-dark text-truncate d-inline-block align-middle" style="max-width: 125px;" title="@item.StudentName">
+                                        @item.StudentName
+                                    </span>
+                                </td>
+                                <td class="text-muted small text-nowrap">
+                                    <span class="text-truncate d-inline-block align-middle" style="max-width: 155px;" title="@item.StudentEmail">
+                                        @item.StudentEmail
+                                    </span>
+                                </td>
+                                <td class="text-nowrap">
+                                    <span class="badge bg-light text-dark border px-2 py-1 small">
+                                        @item.RequestType.ToFriendlyName()
+                                    </span>
+                                </td>
+                                <td class="text-muted small text-nowrap">
+                                    @item.RequestDate.ToDisplayDateTime("dd MMM, hh:mm tt")
+                                </td>
+                                <td class="text-nowrap text-center">
+                                    <span class="badge @item.Status.ToBadgeClass() status-badge rounded-pill">
+                                        @item.Status
+                                    </span>
+                                </td>
+                                <td class="text-nowrap">
+                                    @if (!string.IsNullOrEmpty(item.StaffRemarks))
+                                    {
+                                        <span class="small text-dark text-truncate d-inline-block align-middle" style="max-width: 115px;" title="@item.StaffRemarks">
+                                            @item.StaffRemarks
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted small italic">-</span>
+                                    }
+                                </td>
+                                <td class="text-end pe-3 text-nowrap">
+                                    <div class="btn-group btn-group-sm text-nowrap">
+                                        <a asp-controller="Staff" asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-secondary btn-sm px-2 py-1 d-inline-flex align-items-center text-nowrap" title="View Details">
+                                            <i class="bi bi-eye me-1"></i> Details
+                                        </a>
+                                        <a asp-controller="Staff" asp-action="UpdateStatus" asp-route-id="@item.Id" class="btn btn-primary btn-sm px-2 py-1 d-inline-flex align-items-center text-nowrap" title="Update Status">
+                                            <i class="bi bi-pencil-square me-1"></i> Status
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="text-center py-5">
+                <i class="bi bi-search fs-1 text-muted"></i>
+                <h5 class="fw-bold mt-2">No matching requests found</h5>
+                <p class="text-muted small">Try modifying your search keywords or filter criteria.</p>
+                <a asp-controller="Staff" asp-action="Requests" class="btn btn-outline-primary btn-sm rounded-pill px-3">
+                    Reset Filters
+                </a>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function applyDropdownFilter(inputId, value) {
+            const input = document.getElementById(inputId);
+            if (input.value === value) {
+                input.value = '';
+            } else {
+                input.value = value;
+            }
+            document.getElementById('filterForm').submit();
+        }
+    </script>
+}
+

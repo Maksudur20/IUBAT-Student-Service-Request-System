@@ -1,0 +1,440 @@
+:root {
+    --bs-font-sans-serif: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --bs-primary: #0d47a1;
+    --bs-primary-rgb: 13, 71, 161;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--bs-font-sans-serif);
+    color: #1e293b;
+    background-color: #f8fafc;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Custom Smooth Scrollbars */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Typography & Links */
+.navbar-brand {
+    letter-spacing: 0.2px;
+}
+
+a {
+    transition: color 0.15s ease, opacity 0.15s ease;
+}
+
+/* Enhanced Cards with Soft Depth */
+.card {
+    border: 1px solid rgba(226, 232, 240, 0.9) !important;
+    border-radius: 16px !important;
+    background: #ffffff;
+    box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04), 0 2px 6px -1px rgba(15, 23, 42, 0.02) !important;
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:hover {
+    box-shadow: 0 12px 28px -4px rgba(15, 23, 42, 0.08), 0 4px 10px -2px rgba(15, 23, 42, 0.03) !important;
+}
+
+.card-kpi {
+    cursor: pointer;
+}
+
+.card-kpi:hover {
+    transform: translateY(-3px);
+}
+
+/* Enhanced Dropdown Selectors & Inputs */
+.form-select,
+.form-control {
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 0.65rem 1rem;
+    font-size: 0.925rem;
+    font-weight: 500;
+    color: #1e293b;
+    background-color: #ffffff;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.form-select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23334155' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 1rem center !important;
+    background-size: 13px 10px !important;
+    padding-right: 2.5rem !important;
+}
+
+.form-select option {
+    padding: 10px 14px;
+    font-weight: 500;
+    color: #1e293b;
+    background: #ffffff;
+}
+
+.form-control:hover,
+.form-select:hover {
+    border-color: #cbd5e1;
+    background-color: #fcfcfc;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #0d47a1;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 4px rgba(13, 71, 161, 0.12) !important;
+    outline: none;
+    transform: translateY(-1px);
+}
+
+/* Modern Input Groups with Seamless Joins */
+.input-group {
+    border-radius: 12px;
+    transition: box-shadow 0.2s ease;
+}
+
+.input-group > .input-group-text {
+    border: 1.5px solid #e2e8f0;
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 0.65rem 1rem;
+    color: #64748b;
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.input-group > .form-control:not(:first-child),
+.input-group > .form-select:not(:first-child) {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.input-group > .input-group-text:first-child {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right: none;
+}
+
+.input-group:focus-within {
+    box-shadow: 0 0 0 4px rgba(13, 71, 161, 0.12);
+    border-radius: 12px;
+}
+
+.input-group:focus-within > .input-group-text {
+    border-color: #0d47a1;
+    color: #0d47a1;
+}
+
+.input-group:focus-within > .form-control,
+.input-group:focus-within > .form-select {
+    border-color: #0d47a1;
+    box-shadow: none !important;
+    transform: none;
+}
+
+/* Enhanced Buttons with Smooth Micro-Elevations */
+.btn {
+    font-weight: 500;
+    letter-spacing: 0.2px;
+    border-radius: 10px;
+    padding: 0.55rem 1.15rem;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-sm {
+    padding: 0.35rem 0.85rem;
+    border-radius: 8px;
+}
+
+.btn-lg {
+    padding: 0.75rem 1.65rem;
+    border-radius: 14px;
+}
+
+.btn:hover {
+    transform: translateY(-1.5px);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn-primary {
+    background-color: #0d47a1;
+    border-color: #0d47a1;
+    box-shadow: 0 2px 8px rgba(13, 71, 161, 0.2);
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: #093478;
+    border-color: #093478;
+    box-shadow: 0 6px 18px rgba(13, 71, 161, 0.3);
+}
+
+/* Enhanced Table Styling */
+.table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+}
+
+.table thead th {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    letter-spacing: 0.5px;
+    color: #64748b;
+    background-color: #f8fafc;
+    border-bottom: 1.5px solid #e2e8f0;
+    padding: 0.75rem 0.55rem;
+}
+
+.table tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f8fafc !important;
+}
+
+.table tbody td {
+    padding: 0.75rem 0.55rem;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: middle;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    content: "›";
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+/* Perfect Circle Icon Containers */
+.icon-circle,
+div.rounded-circle {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 50% !important;
+    aspect-ratio: 1 / 1 !important;
+    line-height: 1 !important;
+    flex-shrink: 0 !important;
+    padding: 0 !important;
+}
+
+.icon-circle-sm {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    min-height: 38px;
+    font-size: 1.15rem;
+}
+
+.icon-circle-md {
+    width: 52px;
+    height: 52px;
+    min-width: 52px;
+    min-height: 52px;
+    font-size: 1.4rem;
+}
+
+.icon-circle-lg {
+    width: 68px;
+    height: 68px;
+    min-width: 68px;
+    min-height: 68px;
+    font-size: 1.95rem;
+}
+
+.icon-circle-xl {
+    width: 84px;
+    height: 84px;
+    min-width: 84px;
+    min-height: 84px;
+    font-size: 2.5rem;
+}
+
+.icon-circle i, div.rounded-circle i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    margin: 0;
+    padding: 0;
+}
+
+/* Ensure ALL table action buttons and links always keep icon and text strictly side-by-side */
+.table td .btn,
+.btn-group .btn,
+.btn.text-nowrap {
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.35rem;
+}
+
+/* Uniform Status Pill Badges - Equal width and centered */
+.status-badge,
+.table td .badge.rounded-pill {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 95px !important;
+    min-width: 95px !important;
+    max-width: 95px !important;
+    padding: 0.32rem 0.4rem !important;
+    font-size: 0.78rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.2px !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+/* Cream Navbar with Soft Subtle Shadow */
+.navbar-cream {
+    background-color: #fdfaf2 !important; /* Elegant warm cream */
+    border-bottom: 1px solid #eee5d5 !important;
+    box-shadow: 0 4px 20px rgba(30, 20, 10, 0.06), 0 1px 3px rgba(0, 0, 0, 0.03) !important;
+}
+
+.navbar-cream .navbar-brand {
+    color: #1e293b !important;
+}
+
+.navbar-cream .nav-link {
+    color: #4b5563 !important;
+    font-weight: 500;
+    border-radius: 50rem;
+    padding: 0.45rem 0.85rem !important;
+    transition: all 0.15s ease-in-out;
+}
+
+.navbar-cream .nav-link:hover,
+.navbar-cream .nav-link:focus,
+.navbar-cream .nav-link.active {
+    color: #0d47a1 !important;
+    background-color: rgba(13, 71, 161, 0.07);
+}
+
+/* Custom Filter Dropdowns with Luxury Rounded Borders */
+.custom-filter-dropdown {
+    position: relative;
+}
+
+.custom-filter-dropdown .dropdown-toggle {
+    background-color: #ffffff;
+    border: 1.5px solid #e2e8f0 !important;
+    border-radius: 50rem !important;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: #1e293b;
+    padding: 0.58rem 1.15rem !important;
+    transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.custom-filter-dropdown .dropdown-toggle:hover {
+    border-color: #cbd5e1 !important;
+    background-color: #fafafa;
+    transform: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.custom-filter-dropdown .dropdown-toggle:focus,
+.custom-filter-dropdown .dropdown-toggle.show {
+    border-color: #0d47a1 !important;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 4px rgba(13, 71, 161, 0.12) !important;
+}
+
+.custom-filter-dropdown .dropdown-menu {
+    top: 100% !important;
+    left: 0 !important;
+    transform: none !important;
+    margin-top: 5px !important;
+    width: 100% !important;
+    min-width: 100% !important;
+}
+
+.dropdown-menu {
+    border-radius: 18px !important;
+    border: 1px solid rgba(226, 232, 240, 0.9) !important;
+    box-shadow: 0 16px 40px -4px rgba(15, 23, 42, 0.14), 0 4px 12px -2px rgba(15, 23, 42, 0.04) !important;
+    padding: 0.55rem !important;
+    background: #ffffff;
+}
+
+.dropdown-menu.show {
+    animation: dropdownFadeIn 0.15s ease-out;
+}
+
+@keyframes dropdownFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.dropdown-item {
+    border-radius: 12px !important;
+    font-weight: 500;
+    font-size: 0.88rem;
+    color: #334155;
+    padding: 0.6rem 0.95rem !important;
+    transition: all 0.15s ease;
+}
+
+.dropdown-item:hover {
+    background-color: #f1f5f9;
+    color: #0d47a1;
+    transform: translateX(3px);
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+    background-color: rgba(13, 71, 161, 0.09) !important;
+    color: #0d47a1 !important;
+}
+
+/* Pill Search Input */
+.search-pill .input-group-text {
+    border-top-left-radius: 50rem !important;
+    border-bottom-left-radius: 50rem !important;
+    padding-left: 1.15rem;
+}
+
+.search-pill .form-control {
+    border-top-right-radius: 50rem !important;
+    border-bottom-right-radius: 50rem !important;
+    padding-right: 1.15rem;
+}
+

@@ -1,0 +1,158 @@
+@model StudentServiceRequestSystem.ViewModels.StaffDashboardViewModel
+@using StudentServiceRequestSystem.Models
+@{
+    ViewData["Title"] = "Staff Administration Dashboard";
+}
+
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 pb-2 border-bottom">
+    <div>
+        <h2 class="fw-bold text-dark mb-1">Staff Administration Dashboard</h2>
+        <p class="text-muted mb-0">Welcome, <strong>@Model.StaffName</strong> (University Administration)</p>
+    </div>
+    <div class="mt-3 mt-md-0">
+        <a asp-controller="Staff" asp-action="Requests" class="btn btn-primary rounded-pill px-4 shadow-sm">
+            <i class="bi bi-list-check me-1"></i> View All Requests (@Model.TotalRequests)
+        </a>
+    </div>
+</div>
+
+<!-- KPI Cards -->
+<div class="row g-3 mb-4">
+    <div class="col-sm-6 col-lg">
+        <div class="card shadow-sm border-0 rounded-4 p-3 bg-white h-100 border-start border-4 border-dark">
+            <span class="text-muted small text-uppercase fw-semibold">Total Requests</span>
+            <div class="d-flex justify-content-between align-items-center mt-2">
+                <h3 class="fw-bold text-dark mb-0">@Model.TotalRequests</h3>
+                <div class="icon-circle icon-circle-md bg-light text-secondary">
+                    <i class="bi bi-collection"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-lg">
+        <a asp-controller="Staff" asp-action="Requests" asp-route-statusFilter="@RequestStatus.Pending" class="text-decoration-none">
+            <div class="card shadow-sm border-0 rounded-4 p-3 bg-white h-100 border-start border-4 border-warning">
+                <span class="text-muted small text-uppercase fw-semibold">Pending Review</span>
+                <div class="d-flex justify-content-between align-items-center mt-2">
+                    <h3 class="fw-bold text-warning mb-0">@Model.PendingRequests</h3>
+                    <div class="icon-circle icon-circle-md bg-warning-subtle text-warning">
+                        <i class="bi bi-hourglass-split"></i>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-sm-6 col-lg">
+        <a asp-controller="Staff" asp-action="Requests" asp-route-statusFilter="@RequestStatus.Processing" class="text-decoration-none">
+            <div class="card shadow-sm border-0 rounded-4 p-3 bg-white h-100 border-start border-4 border-primary">
+                <span class="text-muted small text-uppercase fw-semibold">Processing</span>
+                <div class="d-flex justify-content-between align-items-center mt-2">
+                    <h3 class="fw-bold text-primary mb-0">@Model.ProcessingRequests</h3>
+                    <div class="icon-circle icon-circle-md bg-primary-subtle text-primary">
+                        <i class="bi bi-gear-wide-connected"></i>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-sm-6 col-lg">
+        <a asp-controller="Staff" asp-action="Requests" asp-route-statusFilter="@RequestStatus.Completed" class="text-decoration-none">
+            <div class="card shadow-sm border-0 rounded-4 p-3 bg-white h-100 border-start border-4 border-success">
+                <span class="text-muted small text-uppercase fw-semibold">Completed</span>
+                <div class="d-flex justify-content-between align-items-center mt-2">
+                    <h3 class="fw-bold text-success mb-0">@Model.CompletedRequests</h3>
+                    <div class="icon-circle icon-circle-md bg-success-subtle text-success">
+                        <i class="bi bi-check-circle"></i>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-sm-6 col-lg">
+        <a asp-controller="Staff" asp-action="Requests" asp-route-statusFilter="@RequestStatus.Rejected" class="text-decoration-none">
+            <div class="card shadow-sm border-0 rounded-4 p-3 bg-white h-100 border-start border-4 border-danger">
+                <span class="text-muted small text-uppercase fw-semibold">Rejected</span>
+                <div class="d-flex justify-content-between align-items-center mt-2">
+                    <h3 class="fw-bold text-danger mb-0">@Model.RejectedRequests</h3>
+                    <div class="icon-circle icon-circle-md bg-danger-subtle text-danger">
+                        <i class="bi bi-x-circle"></i>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!-- Recent Requests Queue -->
+<div class="card shadow-sm border-0 rounded-4 bg-white overflow-hidden mb-4">
+    <div class="card-header bg-white py-3 px-4 d-flex justify-content-between align-items-center">
+        <h5 class="fw-bold text-dark mb-0">
+            <i class="bi bi-inboxes me-2 text-primary"></i>Recent Submissions
+        </h5>
+        <a asp-controller="Staff" asp-action="Requests" class="btn btn-sm btn-outline-primary rounded-pill px-3">
+            View All Submissions &rarr;
+        </a>
+    </div>
+    <div class="card-body p-0">
+        @if (Model.RecentRequests.Any())
+        {
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light text-secondary small">
+                        <tr>
+                            <th class="ps-4">ID</th>
+                            <th>Student Name</th>
+                            <th>Student Email</th>
+                            <th>Service Type</th>
+                            <th>Submitted</th>
+                            <th>Status</th>
+                            <th class="text-end pe-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.RecentRequests)
+                        {
+                            <tr>
+                                <td class="ps-4 fw-bold text-secondary">#@item.Id</td>
+                                <td class="fw-semibold text-dark">@item.StudentName</td>
+                                <td class="text-muted small">@item.StudentEmail</td>
+                                <td>
+                                    <span class="badge bg-light text-dark border">
+                                        @item.RequestType.ToFriendlyName()
+                                    </span>
+                                </td>
+                                <td class="text-muted small">@item.RequestDate.ToDisplayDateTime("dd MMM, hh:mm tt")</td>
+                                <td>
+                                    <span class="badge @item.Status.ToBadgeClass() status-badge rounded-pill">
+                                        @item.Status
+                                    </span>
+                                </td>
+                                <td class="text-end pe-4 text-nowrap">
+                                    <div class="btn-group btn-group-sm text-nowrap">
+                                        <a asp-controller="Staff" asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-secondary d-inline-flex align-items-center text-nowrap">
+                                            <i class="bi bi-eye me-1"></i> Details
+                                        </a>
+                                        <a asp-controller="Staff" asp-action="UpdateStatus" asp-route-id="@item.Id" class="btn btn-primary d-inline-flex align-items-center text-nowrap">
+                                            <i class="bi bi-pencil-square me-1"></i> Status
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="text-center py-5">
+                <i class="bi bi-clipboard2-check fs-1 text-muted"></i>
+                <h6 class="fw-bold mt-2">No student requests submitted yet.</h6>
+            </div>
+        }
+    </div>
+</div>
