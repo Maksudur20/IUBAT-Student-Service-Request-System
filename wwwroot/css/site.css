@@ -477,3 +477,9 @@ div.rounded-circle {
     flex-shrink: 0;
 }
 
+/* Prevent Action Buttons from Breaking into Two Lines */
+.btn.text-nowrap {
+    white-space: nowrap !important;
+}
+
+
