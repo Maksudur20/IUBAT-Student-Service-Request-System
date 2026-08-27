@@ -15,6 +15,8 @@ public class RequestDetailsViewModel
     public int StudentId { get; set; }
     public string StudentName { get; set; } = string.Empty;
     public string StudentEmail { get; set; } = string.Empty;
+    public string? StudentUniversityId { get; set; }
+    public string? StudentDepartment { get; set; }
 
     public bool IsStaffViewer { get; set; }
 }

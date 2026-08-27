@@ -34,8 +34,11 @@ public class StudentController : Controller
     public async Task<IActionResult> Dashboard()
     {
         var studentId = GetCurrentUserId();
-        var studentName = User.FindFirstValue(ClaimTypes.Name) ?? "Student";
-        var studentEmail = User.FindFirstValue(ClaimTypes.Email) ?? "";
+        var studentUser = await _context.Users.FindAsync(studentId);
+        var studentName = studentUser?.Name ?? User.FindFirstValue(ClaimTypes.Name) ?? "Student";
+        var studentEmail = studentUser?.Email ?? User.FindFirstValue(ClaimTypes.Email) ?? "";
+        var universityId = studentUser?.UniversityId ?? User.FindFirstValue("UniversityId");
+        var department = studentUser?.Department ?? User.FindFirstValue("Department");
 
         var requestsQuery = _context.ServiceRequests
             .Where(r => r.UserId == studentId);
@@ -65,6 +68,8 @@ public class StudentController : Controller
         {
             StudentName = studentName,
             StudentEmail = studentEmail,
+            UniversityId = universityId,
+            Department = department,
             TotalRequests = total,
             PendingRequests = pending,
             ProcessingRequests = processing,
@@ -177,6 +182,8 @@ public class StudentController : Controller
             StudentId = request.UserId,
             StudentName = request.User?.Name ?? "N/A",
             StudentEmail = request.User?.Email ?? "N/A",
+            StudentUniversityId = request.User?.UniversityId,
+            StudentDepartment = request.User?.Department,
             IsStaffViewer = false
         };
 

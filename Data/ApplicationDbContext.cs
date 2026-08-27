@@ -44,6 +44,12 @@ public class ApplicationDbContext : DbContext
                 .HasConversion<string>()
                 .HasMaxLength(20);
 
+            entity.Property(u => u.UniversityId)
+                .HasMaxLength(50);
+
+            entity.Property(u => u.Department)
+                .HasMaxLength(150);
+
             entity.Property(u => u.CreatedAt)
                 .HasDefaultValueSql("NOW()");
         });

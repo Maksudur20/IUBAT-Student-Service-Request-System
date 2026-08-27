@@ -27,6 +27,21 @@
             </div>
 
             <div class="card-body p-4">
+                @if (!string.IsNullOrEmpty(Model.StudentUniversityId) || !string.IsNullOrEmpty(Model.StudentDepartment))
+                {
+                    <div class="p-2 px-3 bg-light rounded-3 border d-flex flex-wrap align-items-center gap-2 mb-4 small text-muted">
+                        <span><i class="bi bi-person-circle text-primary me-1"></i><strong>@Model.StudentName</strong></span>
+                        @if (!string.IsNullOrEmpty(Model.StudentUniversityId))
+                        {
+                            <span class="badge bg-white text-primary border"><i class="bi bi-person-badge me-1"></i>ID: @Model.StudentUniversityId</span>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.StudentDepartment))
+                        {
+                            <span class="badge bg-white text-secondary border"><i class="bi bi-mortarboard me-1"></i>@Model.StudentDepartment</span>
+                        }
+                    </div>
+                }
+
                 <div class="row g-4 mb-4">
                     <div class="col-md-6">
                         <div class="p-3 bg-light rounded-3 border">

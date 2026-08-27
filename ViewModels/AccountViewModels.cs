@@ -9,6 +9,15 @@ public class RegisterViewModel
     [Display(Name = "Full Name")]
     public string Name { get; set; } = string.Empty;
 
+    [Required(ErrorMessage = "University Student ID is required.")]
+    [StringLength(30, MinimumLength = 4, ErrorMessage = "University ID must be between 4 and 30 characters.")]
+    [Display(Name = "University ID")]
+    public string UniversityId { get; set; } = string.Empty;
+
+    [Required(ErrorMessage = "Please select your department / program.")]
+    [Display(Name = "Department / Program")]
+    public string Department { get; set; } = string.Empty;
+
     [Required(ErrorMessage = "Email address is required.")]
     [EmailAddress(ErrorMessage = "Please enter a valid email address.")]
     [StringLength(150)]

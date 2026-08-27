@@ -438,3 +438,42 @@ div.rounded-circle {
     padding-right: 1.15rem;
 }
 
+/* Compact Validation Summary Error Alerts */
+.validation-summary-valid {
+    display: none !important;
+}
+
+.validation-summary-errors,
+.alert.validation-summary-errors {
+    padding: 0.5rem 0.85rem !important;
+    font-size: 0.85rem !important;
+    line-height: 1.35 !important;
+    border-radius: 10px !important;
+    margin-bottom: 1rem !important;
+}
+
+.validation-summary-errors ul,
+.alert.validation-summary-errors ul {
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.validation-summary-errors ul li,
+.alert.validation-summary-errors ul li {
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex;
+    align-items: center;
+}
+
+.validation-summary-errors ul li::before,
+.alert.validation-summary-errors ul li::before {
+    content: "\F332";
+    font-family: "bootstrap-icons" !important;
+    font-size: 0.95rem;
+    margin-right: 0.45rem;
+    color: currentColor;
+    flex-shrink: 0;
+}
+

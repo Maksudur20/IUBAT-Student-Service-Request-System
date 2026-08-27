@@ -41,6 +41,8 @@ public class StaffController : Controller
                 UserId = r.UserId,
                 StudentName = r.User != null ? r.User.Name : "Unknown",
                 StudentEmail = r.User != null ? r.User.Email : "Unknown",
+                StudentUniversityId = r.User != null ? r.User.UniversityId : null,
+                StudentDepartment = r.User != null ? r.User.Department : null,
                 RequestType = r.RequestType,
                 Description = r.Description,
                 Status = r.Status,
@@ -87,6 +89,8 @@ public class StaffController : Controller
             query = query.Where(r =>
                 (r.User != null && r.User.Name.ToLower().Contains(searchLower)) ||
                 (r.User != null && r.User.Email.ToLower().Contains(searchLower)) ||
+                (r.User != null && r.User.UniversityId != null && r.User.UniversityId.ToLower().Contains(searchLower)) ||
+                (r.User != null && r.User.Department != null && r.User.Department.ToLower().Contains(searchLower)) ||
                 r.Description.ToLower().Contains(searchLower) ||
                 r.Id.ToString() == searchLower);
         }
@@ -99,6 +103,8 @@ public class StaffController : Controller
                 UserId = r.UserId,
                 StudentName = r.User != null ? r.User.Name : "N/A",
                 StudentEmail = r.User != null ? r.User.Email : "N/A",
+                StudentUniversityId = r.User != null ? r.User.UniversityId : null,
+                StudentDepartment = r.User != null ? r.User.Department : null,
                 RequestType = r.RequestType,
                 Description = r.Description,
                 Status = r.Status,
@@ -139,6 +145,8 @@ public class StaffController : Controller
             StudentId = request.UserId,
             StudentName = request.User?.Name ?? "Unknown",
             StudentEmail = request.User?.Email ?? "Unknown",
+            StudentUniversityId = request.User?.UniversityId,
+            StudentDepartment = request.User?.Department,
             IsStaffViewer = true
         };
 
@@ -162,6 +170,8 @@ public class StaffController : Controller
             Id = request.Id,
             StudentName = request.User?.Name ?? "Unknown",
             StudentEmail = request.User?.Email ?? "Unknown",
+            StudentUniversityId = request.User?.UniversityId,
+            StudentDepartment = request.User?.Department,
             RequestType = request.RequestType,
             Description = request.Description,
             RequestDate = request.RequestDate,

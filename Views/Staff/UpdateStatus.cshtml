@@ -31,6 +31,14 @@
                     <div class="col-sm-6">
                         <span class="text-muted small">Student:</span>
                         <div class="fw-bold text-dark">@Model.StudentName (@Model.StudentEmail)</div>
+                        @if (!string.IsNullOrEmpty(Model.StudentUniversityId))
+                        {
+                            <span class="badge bg-white text-primary border small me-1"><i class="bi bi-person-badge me-1"></i>@Model.StudentUniversityId</span>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.StudentDepartment))
+                        {
+                            <span class="badge bg-white text-secondary border small"><i class="bi bi-mortarboard me-1"></i>@Model.StudentDepartment</span>
+                        }
                     </div>
                     <div class="col-sm-6">
                         <span class="text-muted small">Service Type:</span>
@@ -48,11 +56,13 @@
                 <input type="hidden" asp-for="Id" />
                 <input type="hidden" asp-for="StudentName" />
                 <input type="hidden" asp-for="StudentEmail" />
+                <input type="hidden" asp-for="StudentUniversityId" />
+                <input type="hidden" asp-for="StudentDepartment" />
                 <input type="hidden" asp-for="RequestType" />
                 <input type="hidden" asp-for="Description" />
                 <input type="hidden" asp-for="RequestDate" />
 
-                <div asp-validation-summary="ModelOnly" class="alert alert-danger rounded-3 small mb-3"></div>
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger rounded-3 small mb-3 py-2 px-3"></div>
 
                 <div class="mb-4">
                     <label asp-for="Status" class="form-label fw-semibold small text-secondary"></label>

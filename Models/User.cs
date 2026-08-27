@@ -23,6 +23,14 @@ public class User
     [Required]
     public UserRole Role { get; set; } = UserRole.Student;
 
+    [MaxLength(50)]
+    [Display(Name = "University ID")]
+    public string? UniversityId { get; set; }
+
+    [MaxLength(150)]
+    [Display(Name = "Department")]
+    public string? Department { get; set; }
+
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     // Navigation property

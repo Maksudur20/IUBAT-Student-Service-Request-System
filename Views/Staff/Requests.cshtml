@@ -151,14 +151,26 @@
                             <tr>
                                 <td class="ps-3 fw-bold text-secondary text-nowrap">#@item.Id</td>
                                 <td class="text-nowrap">
-                                    <span class="fw-semibold text-dark text-truncate d-inline-block align-middle" style="max-width: 125px;" title="@item.StudentName">
+                                    <span class="fw-semibold text-dark text-truncate d-block" style="max-width: 140px;" title="@item.StudentName">
                                         @item.StudentName
                                     </span>
+                                    @if (!string.IsNullOrEmpty(item.StudentUniversityId))
+                                    {
+                                        <span class="badge bg-light text-primary border small" title="University ID: @item.StudentUniversityId">
+                                            <i class="bi bi-person-badge me-1"></i>@item.StudentUniversityId
+                                        </span>
+                                    }
                                 </td>
                                 <td class="text-muted small text-nowrap">
-                                    <span class="text-truncate d-inline-block align-middle" style="max-width: 155px;" title="@item.StudentEmail">
+                                    <span class="text-truncate d-block" style="max-width: 160px;" title="@item.StudentEmail">
                                         @item.StudentEmail
                                     </span>
+                                    @if (!string.IsNullOrEmpty(item.StudentDepartment))
+                                    {
+                                        <span class="text-secondary small text-truncate d-block" style="max-width: 160px;" title="@item.StudentDepartment">
+                                            <i class="bi bi-mortarboard me-1"></i>@item.StudentDepartment
+                                        </span>
+                                    }
                                 </td>
                                 <td class="text-nowrap">
                                     <span class="badge bg-light text-dark border px-2 py-1 small">

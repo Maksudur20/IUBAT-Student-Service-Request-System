@@ -19,6 +19,8 @@ public class StudentDashboardViewModel
 {
     public string StudentName { get; set; } = string.Empty;
     public string StudentEmail { get; set; } = string.Empty;
+    public string? UniversityId { get; set; }
+    public string? Department { get; set; }
 
     public int TotalRequests { get; set; }
     public int PendingRequests { get; set; }

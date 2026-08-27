@@ -50,6 +50,7 @@ public class AccountController : Controller
         }
 
         var normalizedEmail = model.Email.Trim().ToLower();
+        var normalizedId = model.UniversityId.Trim();
 
         var existingUser = await _context.Users
             .AnyAsync(u => u.Email.ToLower() == normalizedEmail);
@@ -60,10 +61,21 @@ public class AccountController : Controller
             return View(model);
         }
 
+        var existingId = await _context.Users
+            .AnyAsync(u => u.UniversityId != null && u.UniversityId.ToLower() == normalizedId.ToLower());
+
+        if (existingId)
+        {
+            ModelState.AddModelError(nameof(model.UniversityId), "An account with this University ID already exists.");
+            return View(model);
+        }
+
         var newUser = new User
         {
             Name = model.Name.Trim(),
             Email = normalizedEmail,
+            UniversityId = normalizedId,
+            Department = model.Department.Trim(),
             PasswordHash = _passwordHasher.HashPassword(model.Password),
             Role = UserRole.Student, // Normal registration is strictly for Students
             CreatedAt = DateTime.UtcNow
@@ -154,6 +166,16 @@ public class AccountController : Controller
             new(ClaimTypes.Email, user.Email),
             new(ClaimTypes.Role, user.Role.ToString())
         };
+
+        if (!string.IsNullOrEmpty(user.UniversityId))
+        {
+            claims.Add(new Claim("UniversityId", user.UniversityId));
+        }
+
+        if (!string.IsNullOrEmpty(user.Department))
+        {
+            claims.Add(new Claim("Department", user.Department));
+        }
 
         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
         var authProperties = new AuthenticationProperties
